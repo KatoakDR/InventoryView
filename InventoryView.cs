@@ -268,23 +268,15 @@ namespace InventoryView
                         // Anything greater than 4 levels down shows up at the same _level as its parent.
                         int spaces = text.Length - text.TrimStart().Length;
                         int newlevel = 1;
-                        switch (spaces)
+                        if (spaces > 4)
                         {
-                            case 4:
-                                newlevel = 1;
-                                break;
-                            case 8:
-                                newlevel = 2;
-                                break;
-                            case 12:
-                                newlevel = 3;
-                                break;
-                            case 15:
-                                newlevel = 4;
-                                break;
+                            newlevel += (spaces - 4) / 2;
                         }
                         string tap = trimText;
-                        if (tap.StartsWith("-")) tap = tap.Remove(0, 1);
+                        if (tap.StartsWith("-"))
+                        {
+                            tap = tap.Remove(0, 1);
+                        }
                         if (newlevel == 1)
                         {
                             _lastItem = _currentData.AddItem(new ItemData() { tap = tap, storage = true });
