@@ -1,5 +1,8 @@
 fetch.sh
 
+# https://docs.microsoft.com/en-us/visualstudio/extensibility/internals/solution-dot-sln-file?view=vs-2022
+*.sln
+
 # Created by https://www.toptal.com/developers/gitignore/api/windows,visualstudio,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,visualstudio,visualstudiocode
 

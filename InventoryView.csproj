@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InventoryView.cs" />
-    <Compile Include="iData.cs" />
+    <Compile Include="ItemData.cs" />
     <Compile Include="InventoryViewForm.cs">
       <SubType>Form</SubType>
     </Compile>

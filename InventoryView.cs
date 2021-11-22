@@ -203,8 +203,10 @@ namespace InventoryView
                         int newlevel = (spaces + 1) / 3;
                         string tap = trimText;
                         // remove the - from the beginning if it exists.
-                        if (tap.StartsWith("-")) tap = tap.Remove(0, 1);
-
+                        if (tap.StartsWith("-"))
+                        {
+                            tap = tap.Remove(0, 1);
+                        }
                         // The logic below builds a tree of inventory items.
                         if (newlevel == 1) // If the item is in the first _level, add to the root item list
                         {
@@ -279,7 +281,7 @@ namespace InventoryView
                         }
                         if (newlevel == 1)
                         {
-                            _lastItem = _currentData.AddItem(new ItemData() { tap = tap, storage = true });
+                            _lastItem = _currentData.AddItem(new ItemData() { tap = tap });
                         }
                         else if (newlevel == _level)
                         {
@@ -336,7 +338,7 @@ namespace InventoryView
                     else
                     {
                         string tap = trimText.Substring(trimText.IndexOf("--") + 3);
-                        _lastItem = _currentData.AddItem(new ItemData() { tap = tap, storage = false });
+                        _lastItem = _currentData.AddItem(new ItemData() { tap = tap });
                     }
                 } // end if Deed
                 else if (_scanMode == "HomeStart")
@@ -403,12 +405,12 @@ namespace InventoryView
                     else if (trimText.StartsWith("Attached:")) // If the item is attached, it is in/on/under/behind a piece of furniture.
                     {
                         string tap = trimText.Replace("Attached: ", "");
-                        _lastItem = (_lastItem.parent != null ? _lastItem.parent : _lastItem ).AddItem(new ItemData() { tap = tap });
+                        _lastItem = (_lastItem.parent != null ? _lastItem.parent : _lastItem).AddItem(new ItemData() { tap = tap });
                     }
                     else // Otherwise, it is a piece of furniture.
                     {
-                        string tap = trimText.Substring(trimText.IndexOf(":")+2);
-                        _lastItem = _currentData.AddItem(new ItemData() { tap = tap, storage = true });
+                        string tap = trimText.Substring(trimText.IndexOf(":") + 2);
+                        _lastItem = _currentData.AddItem(new ItemData() { tap = tap });
                     }
                 } // end if Home
                 else if (_scanMode == "TraderStart")
@@ -464,7 +466,7 @@ namespace InventoryView
                             case 12:
                                 newlevel = 3;
                                 break;
-                           default:
+                            default:
                                 newlevel = 3;
                                 break;
                         }
@@ -472,7 +474,7 @@ namespace InventoryView
                         if (tap.StartsWith("-")) tap = tap.Remove(0, 1);
                         if (newlevel == 1)
                         {
-                            _lastItem = _currentData.AddItem(new ItemData() { tap = tap, storage = true });
+                            _lastItem = _currentData.AddItem(new ItemData() { tap = tap });
                         }
                         else if (newlevel == _level)
                         {

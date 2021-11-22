@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -119,9 +120,14 @@ namespace InventoryView
         {
             // Sends the tap of the item to drservice.info which has been building a table linking taps to wiki pages from the Plaza scans.
             if (tv.SelectedNode == null)
+            {
                 MessageBox.Show("Select an item to lookup.");
+            }
             else
-                System.Diagnostics.Process.Start(string.Format("https://drservice.info/wiki.ashx?tap={0}", tv.SelectedNode.Text.Replace(" (closed)", "")));
+            {
+                string searchText = Regex.Replace(tv.SelectedNode.Text.Trim(), @"^(a|an|some) ", "");
+                System.Diagnostics.Process.Start(string.Format("https://elanthipedia.play.net/index.php?search={0}", searchText));
+            }
         }
 
         private void btnReset_Click(object sender, EventArgs e)
@@ -139,7 +145,7 @@ namespace InventoryView
             {
                 currentMatch.BackColor = Color.Yellow;
                 int index = searchMatches.IndexOf(currentMatch) - 1;
-                if (index == -1) index = searchMatches.Count()-1;
+                if (index == -1) index = searchMatches.Count() - 1;
                 currentMatch = searchMatches[index];
             }
             currentMatch.EnsureVisible();
@@ -192,7 +198,7 @@ namespace InventoryView
             foreach (TreeNode node in nodes)
             {
                 branchText.Add(new string('\t', level) + node.Text);
-                copyBranchText(node.Nodes, branchText, level+1);
+                copyBranchText(node.Nodes, branchText, level + 1);
             }
         }
 
@@ -246,7 +252,7 @@ namespace InventoryView
             else if (!data.Contains("\""))
                 return string.Format("\"{0}\"", data);
             else
-                return string.Format("\"{0}\"", data.Replace("\"","\"\""));
+                return string.Format("\"{0}\"", data.Replace("\"", "\"\""));
         }
 
         private void exportBranch(TreeNodeCollection nodes, List<ExportData> list, int level)
