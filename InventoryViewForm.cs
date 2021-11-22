@@ -30,16 +30,16 @@ namespace InventoryView
         {
             chkCharacters.Items.Clear();
             tv.Nodes.Clear();
+
             // Get a distinct character list and load them into the checked list box... which is currently not shown/used.
-            var characters = Class1.characterData.Select(tbl => tbl.name).Distinct().ToList();
-            characters.Sort();
+            List<string> characters = InventoryView.GetCharacterNames();
 
             // Recursively load all the items into the tree
-            foreach (var character in characters)
+            foreach (string character in characters)
             {
                 chkCharacters.Items.Add(character, true);
                 TreeNode charNode = tv.Nodes.Add(character);
-                foreach (var source in Class1.characterData.Where(tbl => tbl.name == character))
+                foreach (var source in InventoryView.GetCharacterInventory(character))
                 {
                     TreeNode sourceNode = charNode.Nodes.Add(source.source);
                     sourceNode.ToolTipText = sourceNode.FullPath;
@@ -163,14 +163,14 @@ namespace InventoryView
 
         private void btnScan_Click(object sender, EventArgs e)
         {
-            Class1._host.SendText("/InventoryView scan");
+            InventoryView.SendText("/InventoryView scan");
             this.Close();
         }
 
         private void btnReload_Click(object sender, EventArgs e)
         {
-            Class1.LoadSettings();
-            Class1._host.EchoText("Inventory reloaded.");
+            InventoryView.LoadSettings();
+            InventoryView.EchoText("Inventory reloaded.");
             BindData();
         }
 
